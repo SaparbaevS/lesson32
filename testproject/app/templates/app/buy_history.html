@@ -1,0 +1,15 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+    <h1>History</h1>
+
+    {% for buy_session in history_list %}
+        <p>{{ buy_session.pk }} - {{ buy_session.buy_dt }}</p>
+        <ul>
+        {% for product in buy_session.product_list.all %}
+            <li>{{ product }}</li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+
+{% endblock content %}

@@ -1,0 +1,39 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+    {% for product in product_list %}
+        <p>{{ product }}</p>
+
+        <form action="{% url 'product_like_dislike' product.slug %}" method="POST">
+            {% csrf_token %}
+            <div class="like-dislike-buttons">
+                {% if product.is_liked by user %}
+                    <button type="submit" name="like" value="unlike">Unlike</button>
+                {% else %}
+                    <button type="submit" name="like" value="like">Like</button>
+                {% endif %}
+
+                {% if product.is_disliked by user %}
+                    <button type="submit" name="dislike" value="undislike">Dislike</button>
+                {% else %}
+                    <button type="submit" name="dislike" value="dislike">Dislike</button>
+                {% endif %}
+            </div>
+        </form>
+
+        {% if product.likes.count %}
+            {{ product.likes.count }} people liked this.
+        {% endif %}
+        {% if product.dislikes.count %}
+            {{ product.dislikes.count }} people disliked this.
+        {% endif %}
+
+
+        <p><a href="{% url 'add_to_cart' product.slug %}">Add To Cart</a></p>
+
+        <p><a href="{% url 'product_detail' product.slug %}">Detail</a></p>
+        <br>
+    {% endfor %}
+
+{% endblock content %}

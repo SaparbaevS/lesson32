@@ -1,0 +1,27 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+  <h1>Detail</h1>
+  <h1>Product {{ product.title }}</h1>
+  <p>{{ product }}</p>
+
+  <p><a href="{% url 'product_list' %}">Back</a></p>
+
+  {% if user.is_authenticated %}
+    <p>Add commit</p>
+    <form method="POST">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <input type="submit" value="Comment">
+    </form>
+  {% endif %}
+  <br>
+  <p>Comment</p>
+  {% for comment in comment_list %}
+        <p>{{ comment.user.username }}</p>
+        <p>{{ comment.published }}</p>
+        <p>{{ comment.body }}</p>
+
+  {% endfor %}
+{% endblock content %}
